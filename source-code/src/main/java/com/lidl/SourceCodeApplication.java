@@ -1,4 +1,4 @@
-package com.lidl.sourcecode;
+package com.lidl;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
