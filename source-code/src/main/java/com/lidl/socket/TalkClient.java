@@ -14,7 +14,8 @@ public class TalkClient {
             Socket socket = new Socket("127.0.0.1", 4700);
 
             BufferedReader sin = new BufferedReader(new InputStreamReader(System.in));
-            String readline = sin.readLine(); //从系统标准输入读入一字符串
+            //从系统标准输入读入一字符串
+            String readline = sin.readLine();
 
             // 把信息发送给server
             // 创建输出，并打开socket输出流

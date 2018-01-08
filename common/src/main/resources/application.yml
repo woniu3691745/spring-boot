@@ -1,0 +1,10 @@
+server:
+  port: 8081
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: root
+    password: root@2017
+    publisher-confirms: true
+    publisher-returns: true

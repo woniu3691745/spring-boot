@@ -7,30 +7,30 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class URLConnection {
+/**
+ * httpClient demo
+ */
+public class UrlConnection {
 
-    private static String urlAddress = "http://10.7.13.152:8080/api/get";
-    private URL url;
-    private HttpURLConnection uRLConnection;
 
-
-    private String doGet(String username, String password) {
-        String getUrl = urlAddress + "/" + username + "/" + password;
+    private String doGet() {
+        String urlAddress = "http://10.7.13.152:8080/api/get";
+        String getUrl = urlAddress + "/" + "admin" + "/" + "123";
         try {
-            url = new URL(getUrl);
-            uRLConnection = (HttpURLConnection) url.openConnection();
+            URL url = new URL(getUrl);
+            HttpURLConnection uRLConnection = (HttpURLConnection) url.openConnection();
             InputStream is = uRLConnection.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String response = "";
+            StringBuilder response = new StringBuilder();
             String readLine = null;
             while ((readLine = br.readLine()) != null) {
                 //response = br.readLine();
-                response = response + readLine;
+                response.append(readLine);
             }
             is.close();
             br.close();
             uRLConnection.disconnect();
-            return response;
+            return response.toString();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -38,8 +38,8 @@ public class URLConnection {
     }
 
     public static void main(String[] args) {
-        URLConnection urlConnection = new URLConnection();
-        String returnValue = urlConnection.doGet("admin", "123");
+        UrlConnection urlConnection = new UrlConnection();
+        String returnValue = urlConnection.doGet();
         System.out.println("retuenValue = " + returnValue);
     }
 }

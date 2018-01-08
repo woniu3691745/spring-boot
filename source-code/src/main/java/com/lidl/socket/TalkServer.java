@@ -19,6 +19,7 @@ public class TalkServer {
             }
 
             // 获得client信息
+            assert socket != null;
             BufferedReader is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             System.out.println("Client -> " + is.readLine());
 

@@ -1,6 +1,5 @@
 package com.lidl.consumer.amqp.message;
 
-import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
@@ -8,29 +7,26 @@ import org.springframework.stereotype.Component;
 import java.util.logging.Logger;
 
 @Component
-public class Receiver {
+public class ReceiverFrist {
 
-    private static final Logger logger = Logger.getLogger(Receiver.class.toString());
+    private static final Logger logger = Logger.getLogger(ReceiverFrist.class.toString());
 
-    // -> no return callback.
-//    @RabbitListener(queues = "test_consume")
-    public void onMessage(@Payload String foo) throws InterruptedException {
+    //    @RabbitListener(queues = "test_consume")
+    public String onMessageByReturn(@Payload String first) throws InterruptedException {
+        logger.info(">>> First 消费信息 " + first + " 成功！");
+        return "successful";
+    }
+
+    @RabbitListener(queues = "test_consume")
+    public void onMessage(@Payload String first) throws InterruptedException {
 //        throw new RuntimeException();
-        logger.info(">>> 消费信息 " + foo + " 成功！");
+        logger.info(">>> First 消费信息 " + first + " 成功！");
 //        StopWatch watch = new StopWatch();
 //        watch.start();
 //        System.out.println("instance " + 1 + " [x] Received '" + foo + "'");
 //        doWork(foo);
 //        watch.stop();
 //        System.out.println("instance " + 1 + " [x] Done in " + watch.getTotalTimeSeconds() + "s");
-    }
-
-    // -> return callback
-    @RabbitListener(queues = "test_consume")
-    public String onMessageByReturn(String s) throws InterruptedException {
-//        Thread.sleep(10000);
-        logger.info(">>> 消费信息 " + s + " 成功！");
-        return "successful";
     }
 
 
@@ -40,5 +36,6 @@ public class Receiver {
                 Thread.sleep(1000);
             }
         }
+
     }
 }
