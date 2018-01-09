@@ -12,8 +12,9 @@ public class Config {
 
     private static final String QUEUE_EXCHANGE_NAME = "test_exchange";
 
-    @Bean
-    public DirectExchange exchange() {
-        return new DirectExchange(QUEUE_EXCHANGE_NAME);
-    }
+//    @Bean
+//    public DirectExchange exchange() {
+//        return new DirectExchange(QUEUE_EXCHANGE_NAME);
+//    }
+
 }

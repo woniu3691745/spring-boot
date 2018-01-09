@@ -17,6 +17,7 @@ public class ReceiverFrist {
         return "successful";
     }
 
+//    @RabbitListener(queues = "test_consume")
     @RabbitListener(queues = "test_consume")
     public void onMessage(@Payload String first) throws InterruptedException {
 //        throw new RuntimeException();

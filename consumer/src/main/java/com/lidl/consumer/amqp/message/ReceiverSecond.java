@@ -1,5 +1,8 @@
 package com.lidl.consumer.amqp.message;
 
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
@@ -18,6 +21,11 @@ public class ReceiverSecond {
      * @param second 接受的消息
      */
     @RabbitListener(queues = "test_consume")
+//    @RabbitListener(bindings = @QueueBinding(
+//            value = @Queue(value = "test_consume_1", durable = "true"),
+//            exchange = @Exchange(value = "test_exchange_1", ignoreDeclarationExceptions = "true"),
+//            key = "testRoutingKey_1")
+//    )
     public void onMessage(@Payload String second) {
 //        throw new RuntimeException();
         logger.info(">>> Second 消费信息 " + second + " 成功！");
