@@ -9,16 +9,16 @@ import java.util.logging.Logger;
 @Component
 public class ReceiverFrist {
 
+
     private static final Logger logger = Logger.getLogger(ReceiverFrist.class.toString());
 
-    //    @RabbitListener(queues = "test_consume")
+    @RabbitListener(queues = "test_consume")
     public String onMessageByReturn(@Payload String first) throws InterruptedException {
         logger.info(">>> First 消费信息 " + first + " 成功！");
-        return "successful";
+        return "First Successful";
     }
 
-//    @RabbitListener(queues = "test_consume")
-    @RabbitListener(queues = "test_consume")
+    //    @RabbitListener(queues = "test_consume")
     public void onMessage(@Payload String first) throws InterruptedException {
 //        throw new RuntimeException();
         logger.info(">>> First 消费信息 " + first + " 成功！");

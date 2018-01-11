@@ -32,7 +32,7 @@ public class Sender {
     @Scheduled(fixedDelay = 1000, initialDelay = 500)
     public void send() {
 
-        threadMethod();
+//        threadMethod();
 
         StringBuilder builder = new StringBuilder("Hello");
         if (dots++ == 3) {
@@ -47,7 +47,7 @@ public class Sender {
         CorrelationData correlationId = new CorrelationData(UUID.randomUUID().toString());
 
 //        haveNotCallBack(message, correlationId);
-//        haveCallBack(message);
+        haveCallBack(message, correlationId);
 
         confirmCallBack();
         returnCallback();
@@ -95,7 +95,6 @@ public class Sender {
 //            m.getMessageProperties().setReplyTo("asd");
 //            return m;
 //        });
-
     }
 
     /**
@@ -103,9 +102,9 @@ public class Sender {
      *
      * @param message 发送的消息
      */
-    private void haveCallBack(String message) {
-        String cb = (String) rabbitTemplate.convertSendAndReceive(QUEUE_EXCHANGE_NAME, ROUTINGKEY_NAME, message);
-        System.out.println("cb -> " + cb);
+    private void haveCallBack(String message,  CorrelationData correlationId) {
+        String cb = (String) rabbitTemplate.convertSendAndReceive(QUEUE_EXCHANGE_NAME, ROUTINGKEY_NAME, message, correlationId);
+        System.out.println("CallBack -> " + cb);
     }
 
     /**
@@ -113,6 +112,7 @@ public class Sender {
      */
     private void confirmCallBack() {
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
+            System.out.println(correlationData);
             System.out.println(">>> ack -> " + ack);
             if (ack) {
                 System.out.println(">>> ConfirmCallback 消息确认成功");

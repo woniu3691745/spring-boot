@@ -8,4 +8,3 @@ spring:
     password: root@2017
     publisher-confirms: false
     publisher-returns: true
-

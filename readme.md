@@ -1,6 +1,7 @@
 ##启动RabbitMQ：
  + net stop RabbitMQ && net start RabbitMQ
-
+ + D:\DevTool\rabbitmq_server-3.6.11\sbin>rabbitmq-plugins.bat enable rabbitmq_fede
+   ration
 ## RabbitMQ
 ### Exchange
  + Direct 直接式
