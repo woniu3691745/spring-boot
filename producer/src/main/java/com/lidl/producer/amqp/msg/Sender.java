@@ -2,8 +2,10 @@ package com.lidl.producer.amqp.msg;
 
 import com.rabbitmq.client.AMQP;
 import org.springframework.amqp.AmqpException;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessagePostProcessor;
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class Sender {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     @Scheduled(fixedDelay = 1000, initialDelay = 500)
     public void send() {
@@ -103,7 +108,14 @@ public class Sender {
      * @param message 发送的消息
      */
     private void haveCallBack(String message,  CorrelationData correlationId) {
-        String cb = (String) rabbitTemplate.convertSendAndReceive(QUEUE_EXCHANGE_NAME, ROUTINGKEY_NAME, message, correlationId);
+
+        Message message1 = MessageBuilder.withBody("foo".getBytes())
+                .setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN)
+                .setMessageId("10012354")
+                .setHeader("bar", "baz-rabbitmq-leo")
+                .build();
+
+        String cb = (String) rabbitTemplate.convertSendAndReceive(QUEUE_EXCHANGE_NAME, ROUTINGKEY_NAME, message1, correlationId);
         System.out.println("CallBack -> " + cb);
     }
 
@@ -133,4 +145,13 @@ public class Sender {
         });
     }
 
+    public void A() {
+        ConnectionFactory connectionFactory = new CachingConnectionFactory();
+        AmqpAdmin admin = new RabbitAdmin(connectionFactory);
+        admin.declareQueue(new Queue("myqueue"));
+        AmqpTemplate template = new RabbitTemplate(connectionFactory);
+        template.convertAndSend("myqueue", "foo");
+        String foo = (String) template.receiveAndConvert("myqueue");
+
+    }
 }

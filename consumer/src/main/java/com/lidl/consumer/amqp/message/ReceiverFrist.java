@@ -1,9 +1,12 @@
 package com.lidl.consumer.amqp.message;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @Component
@@ -13,8 +16,9 @@ public class ReceiverFrist {
     private static final Logger logger = Logger.getLogger(ReceiverFrist.class.toString());
 
     @RabbitListener(queues = "test_consume")
-    public String onMessageByReturn(@Payload String first) throws InterruptedException {
+    public String onMessageByReturn(@Payload String first, @Header("bar") String rk) throws InterruptedException {
         logger.info(">>> First 消费信息 " + first + " 成功！");
+        logger.info(">>> rk " + rk);
         return "First Successful";
     }
 
