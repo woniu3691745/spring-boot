@@ -152,6 +152,5 @@ public class Sender {
         AmqpTemplate template = new RabbitTemplate(connectionFactory);
         template.convertAndSend("myqueue", "foo");
         String foo = (String) template.receiveAndConvert("myqueue");
-
     }
 }

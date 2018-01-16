@@ -12,6 +12,7 @@
         <module>common</module>
         <module>consumer</module>
         <module>source-code</module>
+        <module>quartz-module</module>
     </modules>
     <description>Demo project for Spring Boot</description>
 
