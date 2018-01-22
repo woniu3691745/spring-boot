@@ -13,6 +13,7 @@
         <module>consumer</module>
         <module>source-code</module>
         <module>quartz-module</module>
+        <module>producer</module>
     </modules>
     <description>Demo project for Spring Boot</description>
 

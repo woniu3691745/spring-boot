@@ -25,11 +25,16 @@ public class HelloJob implements Job {
         System.out.println("My JobName and group are" + key.getName() + ":" + key.getGroup());
         TriggerKey key1 = jobExecutionContext.getTrigger().getKey();
         System.out.println("My TriggerName and group are" + key1.getName() + ":" + key1.getGroup());
-        JobDataMap jobDataMap = jobExecutionContext.getJobDetail().getJobDataMap();
-        JobDataMap jobDataMap1 = jobExecutionContext.getTrigger().getJobDataMap();
-        String message = jobDataMap.getString("message");
-        Float floatJobValue = jobDataMap.getFloat("FloatJobValue");
-        String message1 = jobDataMap1.getString("message");
-        Double doubleTriggerValue = jobDataMap1.getDouble("DoubleTriggerValue");
+
+//        JobDataMap jobDataMap = jobExecutionContext.getJobDetail().getJobDataMap();
+//        JobDataMap jobDataMap1 = jobExecutionContext.getTrigger().getJobDataMap();
+//        String message = jobDataMap.getString("message");
+//        Float floatJobValue = jobDataMap.getFloat("FloatJobValue");
+//        String message1 = jobDataMap1.getString("message");
+//        Double doubleTriggerValue = jobDataMap1.getDouble("DoubleTriggerValue");
+//        System.out.println("JobMsg FloatMessage is:" + message);
+//        System.out.println("JobMsg FloatJobValue is:" + floatJobValue);
+//        System.out.println("JobMsg DoubleMessage is:" + message1);
+//        System.out.println("JobMsg DoubleJobValue is:" + doubleTriggerValue);
     }
 }

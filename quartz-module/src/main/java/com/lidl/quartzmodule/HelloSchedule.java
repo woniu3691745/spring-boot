@@ -15,37 +15,71 @@ import java.util.Date;
 public class HelloSchedule {
 
     public static void main(String[] args) throws SchedulerException {
+
+        // 开始时间
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(">>>>>>> Current Time Is: " + simpleDateFormat.format(date));
+        date.setTime(date.getTime() + 4000L);
+
+        // 结束时间
+        Date endDate = new Date();
+        endDate.setTime(date.getTime() + 6000);
+
         // 创建一个JobDetail实例，将该实例与HelloJob Class绑定
-//        JobDetail jobDetail = JobBuilder.newJob(HelloJob.class)
-//                .withIdentity("myJob", "group1").build();
-
         JobDetail jobDetail = JobBuilder.newJob(HelloJob.class)
-                .withIdentity("myJob").usingJobData("message", "hello my job1")
-                .usingJobData("FloatJobValue", 3.14F)
-                .build();
+                .withIdentity("myJob", "group1").build();
 
-        System.out.println("jobDetail's name:" + jobDetail.getKey().getName());
-        System.out.println("jobDetail's group:" + jobDetail.getKey().getGroup());
-        System.out.println("jobDetail's jobClass:" + jobDetail.getClass().getName());
+//        JobDetail jobDetail = JobBuilder.newJob(HelloJob.class)
+//                .withIdentity("myJob").usingJobData("message", "hello my job1")
+//                .usingJobData("FloatJobValue", 3.14F)
+//                .build();
+//
+//        System.out.println("jobDetail's name:" + jobDetail.getKey().getName());
+//        System.out.println("jobDetail's group:" + jobDetail.getKey().getGroup());
+//        System.out.println("jobDetail's jobClass:" + jobDetail.getClass().getName());
 
         // 创建一个Trigger实例，定义该Job立即执行，并且每隔两秒钟重复执行一次
-        Trigger trigger = TriggerBuilder.newTrigger().withIdentity("myTrigger", "group1")
-                .usingJobData("message", "hello my trigger")
-                .usingJobData("DoubleTriggerValue", 2.0D)
-                .startNow()
-                .withSchedule(SimpleScheduleBuilder
-                        .simpleSchedule()
-                        .withIntervalInSeconds(2)
-                        .repeatForever())
+//        Trigger trigger = TriggerBuilder
+//                .newTrigger()
+//                .withIdentity("myTrigger", "group1")
+////                .startNow()
+//                .startAt(date)
+//                .endAt(endDate)
+//                .withSchedule(SimpleScheduleBuilder
+//                        .simpleSchedule()
+//                        .withIntervalInSeconds(2)
+//                        .repeatForever())
+//                .build();
+//        Trigger trigger = TriggerBuilder.newTrigger().withIdentity("myTrigger", "group1")
+//                .usingJobData("message", "hello my trigger")
+//                .usingJobData("DoubleTriggerValue", 2.0D)
+//                .startNow()
+//                .withSchedule(SimpleScheduleBuilder
+//                        .simpleSchedule()
+//                        .withIntervalInSeconds(2)
+//                        .repeatForever())
+//                .build();
+
+
+        SimpleTrigger trigger = TriggerBuilder
+                .newTrigger()
+                .withIdentity("myTrigger", "group1")
+                .startAt(date)
+                .withSchedule(
+                        SimpleScheduleBuilder
+                                .simpleSchedule()
+                                .withIntervalInSeconds(2)
+                                .withRepeatCount(3))
+//                                .withRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY))
                 .build();
+
         // 创建Schedule实例
         StdSchedulerFactory stdSchedulerFactory = new StdSchedulerFactory();
         Scheduler scheduler = stdSchedulerFactory.getScheduler();
         scheduler.start();
         // 打印当前时间
-        Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println("Current Time Is: " + simpleDateFormat.format(date));
+        System.out.println(">>>>>>> Current Run Time Is: " + simpleDateFormat.format(date));
         scheduler.scheduleJob(jobDetail, trigger);
 
     }
