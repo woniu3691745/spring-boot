@@ -6,5 +6,9 @@ spring:
     port: 5672
     username: root
     password: root@2017
-    publisher-confirms: false
+    publisher-confirms: true
     publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: auto
+

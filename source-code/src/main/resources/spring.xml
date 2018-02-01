@@ -6,5 +6,4 @@
     <bean id="testBean" class="com.lidl.sourcecode.bean.TestBean">
         <property name="name" value="hello spring"/>
     </bean>
-
 </beans>

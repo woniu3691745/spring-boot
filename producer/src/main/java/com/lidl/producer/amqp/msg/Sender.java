@@ -3,6 +3,7 @@ package com.lidl.producer.amqp.msg;
 import com.rabbitmq.client.AMQP;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -12,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -111,7 +109,7 @@ public class Sender {
 
         Message message1 = MessageBuilder.withBody("foo".getBytes())
                 .setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN)
-                .setMessageId("10012354")
+                .setMessageId(String.valueOf(new Random().nextInt(1000)))
                 .setHeader("bar", "baz-rabbitmq-leo")
                 .build();
 
